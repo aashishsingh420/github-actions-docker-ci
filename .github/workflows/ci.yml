@@ -1,0 +1,33 @@
+name: CI - Docker Build and Validate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t app:test .
+
+      - name: Run container
+        run: |
+          docker run -d -p 8000:8000 --name test-container app:test
+          sleep 10
+
+      - name: Validate API endpoint
+        run: |
+          curl -f "http://localhost:8000/add?a=2&b=3"
+
+      - name: Cleanup
+        if: always()
+        run: docker rm -f test-container
