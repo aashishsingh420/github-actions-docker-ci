@@ -177,6 +177,7 @@ After understanding this repo, you should be able to explain:
 	•	how COPY pulls files into images
 	•	how CI validates running containers
 	•	how to debug failing pipelines
+	•	how to debug failing pipeline- add 1
 
 ⸻
 
